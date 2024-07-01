@@ -1,0 +1,25 @@
+{
+  "name": "project_1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "SET NODE_ENV=development& nodemon app.js",
+    "dev_prod": "SET NODE_ENV=production& nodemon app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@maxmind/geoip2-node": "^5.0.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "get-client-ip": "^1.1.1",
+    "ipapi-tools": "^1.0.4",
+    "node-fetch": "^3.3.2",
+    "node-gpsd": "^0.3.4",
+    "nodemon": "^3.1.4",
+    "satelize": "^0.2.0"
+  }
+}
