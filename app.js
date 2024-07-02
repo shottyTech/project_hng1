@@ -11,7 +11,12 @@ const  getWeatherData = require('./utils')
 //  ?Environment variable
 let PORT = process.env.PORT || 5500;
  app.set('trust proxy', true)
- // Example usage
+
+ app.get('/',(req,res)=>{
+   const ip = req.ip
+   res.send(ip)
+ })
+ 
         // Routes & API
 // Functionality to fetch location through External api
 app.get("/api/hello", (req, res) => {
@@ -19,41 +24,34 @@ app.get("/api/hello", (req, res) => {
       const name = query.visitor_name
       
     
-          async function getData () {
+          async function fetchData () {
             var requestOptions = {
                method: 'GET',
              };
              
-            const data = await fetch("https://api.geoapify.com/v1/ipinfo?&apiKey=97cd821ceea94a81b18ac03dbaef9a17", requestOptions)
-                .then(response => response.json())
-                .then(result => result)
+          return fetch("https://api.geoapify.com/v1/ipinfo?&apiKey=09ac33ff93794767b1e5f8131b8c7f25", requestOptions)
+               .then(response => response.json())
+               .then(result => result)
                .catch(error => console.log('error', error));
-              return data
-    };
-
-                     (async () => {
-                          const dataGlobal = await getData();
-                          
-                          getWeatherData( dataGlobal.city.name) //passing location as an argument//                 
-                          .then((data) => {
-                            console.log(data)
-                            res.status(200).json({
-                                client_ip: req.ip,
-                                location:data.name,
-                                greetings: !query.visitor_name?
-                                `Hello User! the temperature ${data.main.temp} degrees Celcius in ${data.name}`:
-                                `Hello ${query.visitor_name}! the temperature is ${data.main.temp} degrees Celcius in ${data.name}`
-                            }) 
-   })
-                  .catch((error) => {
-                  console.error(error);
-    });
-  })();
-
+         }  
+       
+         async function getData(){
+         const datas =  await fetchData() 
+         const data= await  getWeatherData(datas.city.name)
+           console.log(data)
+           
+           res.status(200).json({
+            client_ip: req.ip,
+            location:data.name,
+            greetings: !query.visitor_name?
+            `Hello User! the temperature ${data.main.temp} degrees Celcius in ${data.name}`:
+            `Hello ${query.visitor_name}! the temperature is ${data.main.temp} degrees Celcius in ${data.name}`
+        }) 
+  }
+       getData()
+           
  });
  
- 
-
 //  Server
 app.listen(5500, () => {
     console.log(`Server is running on port 5500 `);
