@@ -23,6 +23,7 @@ app.get("/api/hello", (req, res) => {
             const response = await fetch('http://ip-api.com/json/?fields=61439');
             const data = await response.json();
                 dataGlobal = data;
+                console.log(dataGlobal)
                    return data;
 };
                      (async () => {
@@ -31,7 +32,7 @@ app.get("/api/hello", (req, res) => {
                           .then((data) => {
                           
                             res.status(200).json({
-                                client_ip: dataGlobal.query,
+                                client_ip: req.ip,
                                 location: data.name,
                                 greetings: !query.visitor_name?
                                 `Hello User! the temperature is ${data.main.temp} degrees Celcius in ${data.name}`:
