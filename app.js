@@ -10,10 +10,10 @@ const app = express();
 const  getWeatherData = require('./utils')
 //  ?Environment variable
 let PORT = process.env.PORT || 5500;
- app.set('trust proxy', true)
+
 
  app.get('/',(req,res)=>{
-   const ip = req.ip
+  const client_ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
    res.send(ip)
  })
  
@@ -41,7 +41,7 @@ app.get("/api/hello", (req, res) => {
            console.log(data)
            
            res.status(200).json({
-            client_ip: req.ip,
+            client_ip: req.headers['x-forwarded-for'] || req.socket.remoteAddress,
             location:data.name,
             greetings: !query.visitor_name?
             `Hello User! the temperature ${data.main.temp} degrees Celcius in ${data.name}`:
