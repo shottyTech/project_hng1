@@ -33,9 +33,9 @@ app.get("/api/hello", (req, res) => {
                           
                             res.status(200).json({
                                 client_ip: req.ip,
-                                location: data.name,
+                                location: data.regionName,
                                 greetings: !query.visitor_name?
-                                `Hello User! the temperature is ${data.main.temp} degrees Celcius in ${data.name}`:
+                                `Hello User! the temperature is ${data.main.temp} degrees Celcius in ${data.regionName}`:
                                 `Hello ${query.visitor_name}! the temperature is ${data.main.temp} degrees Celcius in ${data.name}`
                             }) 
    })
