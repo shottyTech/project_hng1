@@ -1,0 +1,9 @@
+{
+    "REWRITE": [
+        {
+            "source": "/(.*)", 
+            "DESTINATION": "/"
+        }   
+    ]
+
+}
