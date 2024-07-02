@@ -18,33 +18,39 @@ app.get("/api/hello", (req, res) => {
    let{query} = url.parse(req.url, true);   
       const name = query.visitor_name
       
-         let dataGlobal;
-         const getData = async () => {
-            const response = await fetch('http://ip-api.com/json/?fields=61439');
-            const data = await response.json();
-                dataGlobal = data;
-                console.log(dataGlobal)
-                   return data;
-};
+    
+          async function getData () {
+            var requestOptions = {
+               method: 'GET',
+             };
+             
+            const data = await fetch("https://api.geoapify.com/v1/ipinfo?&apiKey=97cd821ceea94a81b18ac03dbaef9a17", requestOptions)
+                .then(response => response.json())
+                .then(result => result)
+               .catch(error => console.log('error', error));
+              return data
+    };
+
                      (async () => {
-                        await getData();
-                          getWeatherData( dataGlobal.city) //passing location as an argument//
-                          .then((data) => {
+                          const dataGlobal = await getData();
                           
+                          getWeatherData( dataGlobal.city.name) //passing location as an argument//                 
+                          .then((data) => {
+                            console.log(data)
                             res.status(200).json({
                                 client_ip: req.ip,
-                                location: data.regionName,
+                                location:data.name,
                                 greetings: !query.visitor_name?
-                                `Hello User! the temperature is ${data.main.temp} degrees Celcius in ${data.regionName}`:
+                                `Hello User! the temperature ${data.main.temp} degrees Celcius in ${data.name}`:
                                 `Hello ${query.visitor_name}! the temperature is ${data.main.temp} degrees Celcius in ${data.name}`
                             }) 
    })
                   .catch((error) => {
                   console.error(error);
     });
- })();
+  })();
 
-});
+ });
  
  
 
