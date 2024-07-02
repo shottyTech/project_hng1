@@ -12,14 +12,7 @@ const  getWeatherData = require('./utils')
 let PORT = process.env.PORT || 5500;
  app.set('trust proxy', true)
  // Example usage
-
- app.get('/',(req,res)=>{
-    const ip = req.ip;
-      res.status(200).json({
-        client_ip:ip
-      })
- })
-            // Routes & API
+        // Routes & API
 // Functionality to fetch location through External api
 app.get("/api/hello", (req, res) => {
    let{query} = url.parse(req.url, true);   
@@ -55,6 +48,6 @@ app.get("/api/hello", (req, res) => {
  
 
 //  Server
-app.listen(PORT, () => {
-    console.log(`Server is running on port `);
+app.listen(5500, () => {
+    console.log(`Server is running on port 5500 `);
 });
